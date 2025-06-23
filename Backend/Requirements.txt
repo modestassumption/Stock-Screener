@@ -1,0 +1,6 @@
+selenium
+yfinance
+pandas 
+numpy
+datetime
+time

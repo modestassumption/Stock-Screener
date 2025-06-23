@@ -88,7 +88,31 @@ def MACD(ticker, span1 = 12, span2 = 26):
     EMA_26 = EMA(ticker, span2)
     return (EMA_12 - EMA_26)
 
-def sig_line(ticker):
-    signal_line = EMA(ticker, 9)
+def sig_line(ticker, customnum=9):
+    signal_line = EMA(ticker, int(customnum))
     return signal_line
+
+def Rel_str(ticker,period,):
+    data = historical_data[ticker]    
+    def checkgainorloss(ticker, day = None):
+        if data['Close'].iloc[-(int(day))] > data['Close'].iloc[-(int(day))]:
+            return 1
+        else:
+            return 0
+    Gain = []
+    Loss = []
+    for i in range(period):
+        if checkgainorloss(ticker,i):
+            Gain.append(i)
+        else:
+            Loss.append(i)
+
+        
+        
+
+            
+
+
+    
+        
 
