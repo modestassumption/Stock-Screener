@@ -14,35 +14,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 import time
 
-
-# In[2]:
-
-
 website = 'https://www.niftyindices.com/market-data/equity-stock-watch'
 
-
-# In[3]:
-
-
 path = r'D:\Downloads\chromedriver-win64\chromedriver.exe'
-
-
-# In[4]:
-
 
 service = Service(path)
 driver = webdriver.Chrome(service=service)
 driver.get(website)
-
-
-# In[ ]:
-
+print('Extracting data from NSE')
 
 wait = WebDriverWait(driver, 10)
-
-
-# In[ ]:
-
 
 locator = (
     By.XPATH,
@@ -51,16 +32,9 @@ locator = (
 dropdown_trigger = wait.until(EC.element_to_be_clickable(locator))
 dropdown_trigger.click()
 
-
-# In[ ]:
-
-
 all_options = wait.until(
     EC.presence_of_all_elements_located((By.CSS_SELECTOR, "ul#ddlStocks .mCSB_container li"))
 )
-
-
-# In[ ]:
 
 
 for option in all_options:
@@ -71,22 +45,13 @@ for option in all_options:
         option.click()
         break
   
-
 else:
     print("Loop completed without finding 'Nifty 200'")
-
-
-# In[ ]:
-
 
 time.sleep(1)
 table = driver.find_element(By.CLASS_NAME, "equityTable")
 rows = table.find_elements(By.TAG_NAME, "tr")  
 time.sleep(0.5)
-
-
-# In[ ]:
-
 
 dataset = []
 for row in rows:
@@ -94,31 +59,13 @@ for row in rows:
     if cells:
         dataset.append(cells[0].text)
 
-
-
-# In[ ]:
-
-
 pd.set_option('display.max_rows',10)
 df = pd.DataFrame(dataset)
 df = df.rename(columns = { 0:'Ticker'})
 df.to_csv("Tickers_NSE200")
 
-
-# In[ ]:
-
-
 driver.close()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
+print('Completed')
 
 
 
