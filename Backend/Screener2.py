@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[3]:
-
-
 import yfinance as yf
 import pandas as pd
 import numpy as np
